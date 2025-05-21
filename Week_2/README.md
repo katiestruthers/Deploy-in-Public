@@ -14,6 +14,9 @@
   - `terraform plan`: Show changes required by the current configuration
   - `terraform apply`: Create or update infrastructure
   - `terraform destroy`: Destroy previously-created infrastructure (useful for learning, as you want to avoid unnecessary charges)
+- Adding SSH Key to SSH Agent
+  - `eval "$(ssh-agent -s)"`
+  - `ssh-add dip-key.pem`
 
 ## Final Result
 <img src="Week2_Deployment_Success.png" width="750" />
