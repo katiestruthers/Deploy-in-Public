@@ -12,6 +12,8 @@
 ## Resources
 - Divide your subnets from 2 to 4: [Subnet Calculator](https://www.davidc.net/sites/default/subnets/subnets.html)
 - Walkthrough: [Managing Application Load Balancer (ALB) with Terraform](https://spacelift.io/blog/terraform-alb)
+- Start a session from AWS CLI:
+  - `aws ssm start-session --target <instance-id>`
 
 ## Final Result
 <img src="Week3_Deployment_Success.png" width="750" />

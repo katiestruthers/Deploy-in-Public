@@ -23,6 +23,8 @@ module "vpc" {
   app_name = var.app_name
 }
 
+// PRIVATE INSTANCES //
+
 resource "aws_security_group" "private_sg" {
   name        = "${var.app_name}-private-sg"
   description = "Allow TCP inbound traffic and all outbound traffic"
@@ -36,8 +38,8 @@ resource "aws_security_group" "private_sg" {
 resource "aws_vpc_security_group_ingress_rule" "private_sg_allow_tcp_traffic" {
   security_group_id = aws_security_group.private_sg.id
   referenced_security_group_id = aws_security_group.lb_sg.id
-  from_port         = 80
-  to_port           = 80
+  from_port         = 3000
+  to_port           = 3000
   ip_protocol       = "tcp"
 }
 
@@ -60,14 +62,12 @@ resource "aws_instance" "private_instance" {
 
   iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
 
-  user_data = templatefile("./script.sh", {
-    instance_num = count.index + 1
-  })
-
   tags = {
     Name = "${var.app_name}-private-ec2-${count.index + 1}"
   }
 }
+
+// AWS IAM PROFILE //
 
 resource "aws_iam_role" "ec2_role" {
   name = "${var.app_name}-ec2-role"
@@ -97,6 +97,8 @@ resource "aws_iam_instance_profile" "ec2_profile" {
   name = "${var.app_name}-ec2-profile"
   role = aws_iam_role.ec2_role.name
 }
+
+// LOAD BALANCER //
 
 resource "aws_security_group" "lb_sg" {
   name        = "${var.app_name}-lb-sg"
@@ -130,9 +132,11 @@ resource "aws_lb" "lb" {
   subnets            = module.vpc.public_subnet_ids
 }
 
+// TARGET GROUP & LISTENER //
+
 resource "aws_lb_target_group" "target_group" {
   name     = "${var.app_name}-target-group"
-  port     = 80
+  port     = 3000
   protocol = "HTTP"
   vpc_id   = module.vpc.vpc_id
 }
@@ -141,7 +145,7 @@ resource "aws_lb_target_group_attachment" "target_group_attachment" {
   count            = 2
   target_group_arn = aws_lb_target_group.target_group.arn
   target_id        = aws_instance.private_instance[count.index].id
-  port             = 80
+  port             = 3000
 }
 
 resource "aws_lb_listener" "lb_listener" {
