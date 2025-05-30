@@ -8,4 +8,4 @@
 - [Dockerizing NestJS Application](https://medium.com/@sujan.dumaru.official/dockerizing-nestjs-application-c4b25139fe4c)
 
 ## Final Result
-<img src="" width="750" />
+<img src="Week4_Deployment_Success.png" width="750" />

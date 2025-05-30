@@ -62,6 +62,8 @@ resource "aws_instance" "private_instance" {
 
   iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
 
+  user_data = file("./Week_4/docker-script.sh")
+
   tags = {
     Name = "${var.app_name}-private-ec2-${count.index + 1}"
   }
@@ -87,10 +89,16 @@ resource "aws_iam_role" "ec2_role" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "ec2_policy_attachment" {
+resource "aws_iam_role_policy_attachment" "ssm_policy_attachment" {
   role = aws_iam_role.ec2_role.name
   
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+
+resource "aws_iam_role_policy_attachment" "ecr_read_policy_attachment" {
+  role = aws_iam_role.ec2_role.name
+  
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 }
 
 resource "aws_iam_instance_profile" "ec2_profile" {
@@ -157,4 +165,10 @@ resource "aws_lb_listener" "lb_listener" {
    type             = "forward"
    target_group_arn = aws_lb_target_group.target_group.arn
  }
+}
+
+// ECR //
+
+resource "aws_ecr_repository" "ecr" {
+  name = "${var.app_name}-ecr"
 }
