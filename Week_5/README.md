@@ -2,13 +2,15 @@
 ## Project Overview
 - Deploy the same containerized [simple NestJS API](https://github.com/katiestruthers/Deploy-in-Public-NestJS) from Week 4, only this time automating the process through CI/CD
 
-- Create our GitHub workflow, separating the deployment process into two jobs:
-  1. Build:
-    - Use [AWS ECR Login Actions](https://github.com/aws-actions/amazon-ecr-login) to login 
-    - Build and Push Docker Image to ECR
-  2. Deploy:
-    - Use [AWS ECR Login Actions](https://github.com/aws-actions/amazon-ecr-login) to login 
-    - Deploy to EC2
+- Create our GitHub workflow with two jobs:
+
+1. **Build**
+   - Use [AWS ECR Login Actions](https://github.com/aws-actions/amazon-ecr-login) to login 
+   - Build and Push Docker Image to ECR
+
+2. **Deploy**
+   - Use [AWS ECR Login Actions](https://github.com/aws-actions/amazon-ecr-login) to login 
+   - Deploy to EC2
 
 ## Resources
 - [GitHub Actions docs](https://docs.github.com/en/actions)
