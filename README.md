@@ -19,6 +19,7 @@ The workshop curriculum includes the following:
 - [Week 4 - Simple API Deployment with Docker, Terraform, and AWS EC2](/Week_4/)
   - [NestJS API with Docker](https://github.com/katiestruthers/Deploy-in-Public-NestJS#)
 - [Week 5 - Simple API Deployment with GitHub Actions](/Week_5/)
+  - [GitHub Actions Workflow for NestJS API](https://github.com/katiestruthers/Deploy-in-Public-NestJS/blob/main/.github/workflows/main.yml)
 
 ## Acknowledgments
 - .gitignore template sourced from [GitHub's official gitignore repository](https://github.com/github/gitignore/blob/main/Terraform.gitignore)
